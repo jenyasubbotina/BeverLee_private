@@ -42,6 +42,7 @@ import uz.alex.its.beverlee.model.actor.ContactModel.ContactData;
 import uz.alex.its.beverlee.utils.Constants;
 import uz.alex.its.beverlee.utils.PermissionManager;
 import uz.alex.its.beverlee.view.UiUtils;
+import uz.alex.its.beverlee.view.activities.MainActivity;
 import uz.alex.its.beverlee.view.adapters.ContactAdapter;
 import uz.alex.its.beverlee.view.interfaces.ContactCallback;
 import uz.alex.its.beverlee.viewmodel.ContactsViewModel;
@@ -87,6 +88,12 @@ public class ContactsFragment extends Fragment implements ContactCallback {
 
     public ContactsFragment() {
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MainActivity.updateNavigationBarState(R.id.navigation_contacts);
     }
 
     @Override

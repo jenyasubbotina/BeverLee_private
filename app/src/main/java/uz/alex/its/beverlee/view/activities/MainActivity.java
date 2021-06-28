@@ -16,7 +16,7 @@ import uz.alex.its.beverlee.utils.Constants;
 import uz.alex.its.beverlee.utils.PermissionManager;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemReselectedListener {
-    private BottomNavigationView bottomNavigationView;
+    private static BottomNavigationView bottomNavigationView;
     private static int currentNavItem;
 
     @Override
@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     protected void onPause() {
         super.onPause();
-//        overridePendingTransition(0, 0);
     }
 
     @Override
@@ -78,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         return true;
     }
 
-    private void updateNavigationBarState(int itemId) {
+    public static void updateNavigationBarState(int itemId) {
         MenuItem item = bottomNavigationView.getMenu().findItem(itemId);
         item.setChecked(true);
     }

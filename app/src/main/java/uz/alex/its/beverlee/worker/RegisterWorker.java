@@ -60,6 +60,7 @@ public class RegisterWorker extends Worker {
                         .build());
             }
             final ResponseBody error = response.errorBody();
+            System.out.println(error.toString() + " error");
 
             if (error == null) {
                 return Result.failure(outputDataBuilder.putString(Constants.REQUEST_ERROR, Constants.UNKNOWN_ERROR).build());

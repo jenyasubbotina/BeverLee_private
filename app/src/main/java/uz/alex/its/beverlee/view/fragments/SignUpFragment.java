@@ -220,6 +220,7 @@ public class SignUpFragment extends Fragment {
 
         authViewModel.getSignUpResult(requireContext()).observe(getViewLifecycleOwner(), workInfo -> {
             if (workInfo.getState() == WorkInfo.State.FAILED || workInfo.getState() == WorkInfo.State.CANCELLED) {
+                System.out.println(workInfo.getOutputData().toString());
                 progressBar.setVisibility(View.GONE);
                 signUpBtn.setEnabled(true);
                 signUpBtn.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.btn_purple, null));

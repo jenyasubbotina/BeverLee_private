@@ -1,4 +1,4 @@
-package uz.alex.its.beverlee.view.fragments;
+                            package uz.alex.its.beverlee.view.fragments;
 
 import android.animation.ObjectAnimator;
 import android.graphics.Color;
@@ -43,6 +43,7 @@ import java.util.List;
 
 import uz.alex.its.beverlee.R;
 import uz.alex.its.beverlee.utils.DateFormatter;
+import uz.alex.its.beverlee.view.activities.MainActivity;
 import uz.alex.its.beverlee.view.adapters.TransactionAdapter;
 import uz.alex.its.beverlee.view.dialog.CalendarDialog;
 import uz.alex.its.beverlee.viewmodel.TransactionViewModel;
@@ -91,6 +92,12 @@ public class MonitoringFragment extends Fragment {
 
     public MonitoringFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MainActivity.updateNavigationBarState(R.id.navigation_monitoring);
     }
 
     @Override

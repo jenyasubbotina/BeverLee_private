@@ -120,7 +120,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/monitoring_header_layout" />
 
-
             <View
                 android:id="@+id/transactions_card"
                 android:layout_width="0dp"

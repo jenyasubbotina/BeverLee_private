@@ -59,6 +59,7 @@ public class InputSmsFragment extends Fragment {
         if (getArguments() != null) {
             this.phone = InputSmsFragmentArgs.fromBundle(getArguments()).getPhone();
         }
+        System.out.println(phone);
         if (requireActivity().getCurrentFocus() != null) {
                 InputMethodManager imm = (InputMethodManager)requireActivity().getSystemService(INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(requireActivity().getCurrentFocus().getWindowToken(), 0);
