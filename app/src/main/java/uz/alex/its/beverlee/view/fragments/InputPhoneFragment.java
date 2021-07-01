@@ -46,7 +46,7 @@ public class InputPhoneFragment extends Fragment {
     private PinViewModel pinViewModel;
 
     private static boolean showPassword = false;
-
+/////
     public InputPhoneFragment() {
 
     }
