@@ -24,13 +24,13 @@ public class AuthParams {
     private final String password;
 
     @Expose
-    @SerializedName("device_name")
-    private final String deviceName;
+    @SerializedName("device_token")
+    private final String deviceToken;
 
     public AuthParams(final String phone, final String password) {
         this.phone = phone;
         this.password = password;
-        this.deviceName = Cryptographic.md5(phone + Build.MANUFACTURER + Build.MODEL);
+        this.deviceToken = Cryptographic.md5(phone + Build.MANUFACTURER + Build.MODEL);
     }
 
     public String getPhone() {
@@ -42,7 +42,7 @@ public class AuthParams {
     }
 
     public String getDeviceName() {
-        return deviceName;
+        return deviceToken;
     }
 
     @NonNull
@@ -51,7 +51,7 @@ public class AuthParams {
         return "AuthParams{" +
                 "phone='" + phone + '\'' +
                 ", password='" + password + '\'' +
-                ", deviceName='" + deviceName + '\'' +
+                ", deviceToken='" + deviceToken + '\'' +
                 '}';
     }
 
