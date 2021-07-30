@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.work.WorkInfo;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,16 +24,21 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
 import uz.alex.its.beverlee.R;
 import uz.alex.its.beverlee.model.chart.LineChartItem;
 import uz.alex.its.beverlee.model.news.NewsModel.News;
 import uz.alex.its.beverlee.model.actor.ContactModel.ContactData;
+import uz.alex.its.beverlee.storage.SharedPrefs;
 import uz.alex.its.beverlee.utils.Constants;
 import uz.alex.its.beverlee.view.LineChart;
 import uz.alex.its.beverlee.view.activities.MainActivity;
@@ -305,6 +311,15 @@ public class HomeFragment extends Fragment implements ContactCallback, NewsCallb
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        SharedPrefs sharedPrefs = SharedPrefs.getInstance(requireContext());
+        String userPhotoUrl = sharedPrefs.getString(Constants.PHOTO_URL);
+        Picasso.get()
+                .load(getString(R.string.dev_server_url) + userPhotoUrl)
+                .noPlaceholder()
+                .fit()
+                .centerCrop()
+                .into(crownImageView);
+
         transactionViewModel.getBalance().observe(getViewLifecycleOwner(), balance -> {
             if (balance != null) {
                 currentBalanceTextView.setText(getString(R.string.current_balance, String.valueOf(balance.getBalance())));
@@ -315,8 +330,7 @@ public class HomeFragment extends Fragment implements ContactCallback, NewsCallb
         contactsViewModel.getContactList().observe(getViewLifecycleOwner(), contactList -> {
             if (contactList != null && !contactList.isEmpty()) {
                 contactListEmptyTextView.setVisibility(View.GONE);
-            }
-            else {
+            } else {
                 contactListEmptyTextView.setVisibility(View.VISIBLE);
             }
             contactsAdapter.setContactList(contactList);
@@ -396,22 +410,22 @@ public class HomeFragment extends Fragment implements ContactCallback, NewsCallb
             final List<LineChartItem> entryList = new ArrayList<>();
 
             if (statisticsData.getBonusAmount() > 0 && !Float.isNaN(statisticsData.getBonusAmount())) {
-                entryList.add(new LineChartItem(ResourcesCompat.getColor(getResources(), R.color.colorOrange, null), statisticsData.getBonusAmount()*100));
+                entryList.add(new LineChartItem(ResourcesCompat.getColor(getResources(), R.color.colorOrange, null), statisticsData.getBonusAmount() * 100));
             }
             if (statisticsData.getPurchaseAmount() > 0 && !Float.isNaN(statisticsData.getPurchaseAmount())) {
-                entryList.add(new LineChartItem(ResourcesCompat.getColor(getResources(), R.color.colorPurple, null), statisticsData.getPurchaseAmount()*100));
+                entryList.add(new LineChartItem(ResourcesCompat.getColor(getResources(), R.color.colorPurple, null), statisticsData.getPurchaseAmount() * 100));
             }
             if (statisticsData.getReceiptAmount() > 0 && !Float.isNaN(statisticsData.getReceiptAmount())) {
-                entryList.add(new LineChartItem(ResourcesCompat.getColor(getResources(), R.color.colorWhite, null), statisticsData.getReceiptAmount()*100));
+                entryList.add(new LineChartItem(ResourcesCompat.getColor(getResources(), R.color.colorWhite, null), statisticsData.getReceiptAmount() * 100));
             }
             if (statisticsData.getTransferAmount() > 0 && !Float.isNaN(statisticsData.getTransferAmount())) {
-                entryList.add(new LineChartItem(ResourcesCompat.getColor(getResources(), R.color.colorGrey, null), statisticsData.getTransferAmount()*100));
+                entryList.add(new LineChartItem(ResourcesCompat.getColor(getResources(), R.color.colorGrey, null), statisticsData.getTransferAmount() * 100));
             }
             if (statisticsData.getReplenishAmount() > 0 && !Float.isNaN(statisticsData.getReplenishAmount())) {
-                entryList.add(new LineChartItem(ResourcesCompat.getColor(getResources(), R.color.colorGreenBright, null), statisticsData.getReplenishAmount()*100));
+                entryList.add(new LineChartItem(ResourcesCompat.getColor(getResources(), R.color.colorGreenBright, null), statisticsData.getReplenishAmount() * 100));
             }
             if (statisticsData.getWithdrawalAmount() > 0 && !Float.isNaN(statisticsData.getWithdrawalAmount())) {
-                entryList.add(new LineChartItem(ResourcesCompat.getColor(getResources(), R.color.colorDarkGrey, null), statisticsData.getWithdrawalAmount()*100));
+                entryList.add(new LineChartItem(ResourcesCompat.getColor(getResources(), R.color.colorDarkGrey, null), statisticsData.getWithdrawalAmount() * 100));
             }
 
             lineChart.initData(entryList);

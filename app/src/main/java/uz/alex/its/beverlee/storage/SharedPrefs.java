@@ -137,6 +137,7 @@ public class SharedPrefs {
         SharedPrefs.getInstance(context).putString(Constants.BEARER_TOKEN, null);
         SharedPrefs.getInstance(context).putString(Constants.PHONE, null);
         SharedPrefs.getInstance(context).putString(Constants.PHONE_VERIFIED, null);
+        SharedPrefs.getInstance(context).putString(Constants.PHOTO_URL, "");
     }
 
 }
