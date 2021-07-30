@@ -24,6 +24,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import br.com.simplepass.loadingbutton.customViews.CircularProgressButton;
+import ru.tinkoff.decoro.Mask;
+import ru.tinkoff.decoro.MaskImpl;
+import ru.tinkoff.decoro.slots.PredefinedSlots;
+import ru.tinkoff.decoro.slots.Slot;
+import ru.tinkoff.decoro.watchers.FormatWatcher;
+import ru.tinkoff.decoro.watchers.MaskFormatWatcher;
 import uz.alex.its.beverlee.R;
 import uz.alex.its.beverlee.model.Country;
 import uz.alex.its.beverlee.model.transaction.WithdrawalTypeModel.WithdrawalType;
@@ -67,6 +73,28 @@ public class WithdrawalFragment extends Fragment {
     private AuthViewModel authViewModel;
 
     private NetworkConnectivity networkConnectivity;
+
+    public static final Slot[] CARD_NUMBER_MASK = {
+            PredefinedSlots.digit(),
+            PredefinedSlots.digit(),
+            PredefinedSlots.digit(),
+            PredefinedSlots.digit(),
+            PredefinedSlots.hardcodedSlot(' ').withTags(Slot.TAG_DECORATION),
+            PredefinedSlots.digit(),
+            PredefinedSlots.digit(),
+            PredefinedSlots.digit(),
+            PredefinedSlots.digit(),
+            PredefinedSlots.hardcodedSlot(' ').withTags(Slot.TAG_DECORATION),
+            PredefinedSlots.digit(),
+            PredefinedSlots.digit(),
+            PredefinedSlots.digit(),
+            PredefinedSlots.digit(),
+            PredefinedSlots.hardcodedSlot(' ').withTags(Slot.TAG_DECORATION),
+            PredefinedSlots.digit(),
+            PredefinedSlots.digit(),
+            PredefinedSlots.digit(),
+            PredefinedSlots.digit(),
+    };
 
     public WithdrawalFragment() {
         // Required empty public constructor
@@ -120,6 +148,7 @@ public class WithdrawalFragment extends Fragment {
         countrySpinner = root.findViewById(R.id.country_spinner);
         cityEditText = root.findViewById(R.id.city_edit_text);
         cardWalletNumberEditText = root.findViewById(R.id.card_wallet_number_edit_text);
+
         amountEditText = root.findViewById(R.id.amount_edit_text);
 
         withdrawBtn = root.findViewById(R.id.withdraw_btn);
@@ -166,6 +195,9 @@ public class WithdrawalFragment extends Fragment {
 
             cardWalletNumberTextView.setText(getString(R.string.recipient_card_number, currentWithdrawalType.getMethod()));
             cardWalletNumberEditText.setHint(getString(R.string.recipient_card_number, ""));
+            FormatWatcher formatWatcher = new MaskFormatWatcher(
+                    MaskImpl.createTerminated(PredefinedSlots.CARD_NUMBER_STANDART));
+            formatWatcher.installOn(cardWalletNumberEditText);
         }
         else if (currentWithdrawalType.getType().equalsIgnoreCase(getString(R.string.withdrawal_type_wallet))) {
             fullNameTextView.setVisibility(View.GONE);
@@ -180,6 +212,10 @@ public class WithdrawalFragment extends Fragment {
 
             cardWalletNumberTextView.setText(getString(R.string.recipient_wallet_number, currentWithdrawalType.getMethod()));
             cardWalletNumberEditText.setHint(getString(R.string.recipient_wallet_number, ""));
+//            MaskImpl cardWalletMask = new MaskImpl(PredefinedSlots.CARD_NUMBER_STANDART, true);
+//            cardWalletMask.setShowingEmptySlots(true);
+//            FormatWatcher cardWalletWatcher = new MaskFormatWatcher(cardWalletMask);
+//            cardWalletWatcher.installOn(cardWalletNumberEditText);
         }
         recipientDataTextView.setText(getString(R.string.recipient_data, currentWithdrawalType.getMethod()));
         amountWithCommissionTextView.setText(getString(R.string.amount_with_commission, 0.0));
