@@ -94,6 +94,7 @@
                     android:textSize="13sp"
                     android:layout_weight="0.5"
                     android:gravity="center"
+                    android:background="@drawable/radio_btn_active"
                     android:button="@null"/>
 
                 <RadioButton
